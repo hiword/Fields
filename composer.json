@@ -1,8 +1,8 @@
 {
-    "name": "simon/form",
-    "description": "form create.",
+    "name": "simon/fields",
+    "description": "fields operation.",
     "type": "library",
-    "keywords": ["console", "interactive", "shell", "repl"],
+    "keywords": ["fields", "laravel"],
     "homepage": "https://github.com/hiword/form",
     "authors": [
         {
@@ -16,7 +16,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Form\\": "src/"
+            "Fields\\": "src/"
         }
     },
     "extra": {
