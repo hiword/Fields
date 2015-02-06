@@ -3,7 +3,7 @@
     "description": "fields operation.",
     "type": "library",
     "keywords": ["fields", "laravel"],
-    "homepage": "https://github.com/hiword/Fields",
+    "homepage": "https://github.com/hiword/form",
     "authors": [
         {
             "name": "simon",
