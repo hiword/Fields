@@ -1,6 +1,5 @@
 <?php
 namespace Fields;
-use Illuminate\Support\Arr;
 abstract class Fields {
 	
 	protected static $components = [];
@@ -76,7 +75,7 @@ abstract class Fields {
 		
 		$fields = array();
 		foreach ($model->fields() as $key=>$values) {
-			$fields[$key] = $model->setFieldsCallable($values);
+			$fields[$key] = $model->resolveFieldsRule($values);
 		}
 		return $fields;
 	}
