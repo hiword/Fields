@@ -37,14 +37,11 @@ class Form extends Fields {
 	 * @return array
 	 */
 	protected function model($model) {
-// 		if (is_string($model)) {
-// 			$model = array($model=>'*');
-// 		} else
-			
 		//一维数组自动添加*所有字段
 		if (is_array($model) && count($model)===count($model,true)) {
 			$model = array_combine($model, array_pad(array(), count($model), '*'));
 		}
+		
 		return $model;
 	}
 	
@@ -53,14 +50,13 @@ class Form extends Fields {
 	 * @param unknown $model
 	 * @return multitype:Ambigous <NULL>
 	 */
-	protected function allowFields($model,$data = false) {
-		$fields = array();
-		foreach (parent::modelFields($model,$data) as  $key=>$values) {
-			if ($values['is_show'] == 1) {
-				$fields[$key] = $values['form'];
-			}
+	protected function allowFields($model,$data = array()) {
+		$allowFields = array();
+
+		foreach (parent::modelFields($model,$data) as  $k=>$item) {
+			$item['is_show'] == 1 && $allowFields[$k] = $item['form'];
 		}
-		return $fields;
+		return $allowFields;
 	}
 	
 }

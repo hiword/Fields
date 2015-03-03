@@ -28,13 +28,14 @@ trait Fields {
 	 * @return array $array
 	 */
 	public function resolveFieldsRule(array $array) {
+		
 		foreach ($array as $key=>&$value) {
 			
 			if (is_array($value)) {
 				$value = $this->resolveFieldsRule($value);
-			} elseif (is_callable($value)) {//callabel
+			} elseif (is_callable($value)) {//callable
 				$value = call_user_func($value);
-			} elseif (method_exists($this, $method = "_{$key}FieldRule")) {//method_Exists
+			} elseif (method_exists($this, $method = "{$key}FieldRule")) {//method_Exists
 				$value = $this->$method();
 			}
 			
@@ -48,32 +49,20 @@ trait Fields {
 	 * @param string $action  Add|Edit
 	 * @return array
 	 */
-	public function setFieldsValue(array $data,$action = '') {
+	protected function setFieldsValue(array $data,$action = '') {
 		
 		!empty($action) && $action = ucwords($action);
 		
 		foreach ($data as $key=>&$value) {
 			
-			if(method_exists($this, $method = "_{$key}{$action}Value")) {
+			if(method_exists($this, $method = "{$key}{$action}Value")) {
 				$value = $this->$method($value);
-			} elseif (method_exists($this,$method = "_{$key}Value")) {
+			} elseif (method_exists($this,$method = "{$key}Value")) {
 				$value = $this->$method($value);
 			}
 			
 		}
 		return $data;
 	}
-// 	public function setFieldsValue(array $data,$action = '') {
-// 		foreach ($data as $key=>&$value) {
-// 			$actionMethod = "_{$action}{$key}Format";
-// 			$method = "_{$key}Format";
-// 			if(method_exists($this, $actionMethod)) {
-// 				$value = $this->$actionMethod($value);
-// 			} elseif (method_exists($this,$method)) {
-// 				$value = $this->$method($value);
-// 			}
-// 		}
-// 		return $data;
-// 	}
 	
 }

@@ -2,19 +2,39 @@
 namespace Fields;
 abstract class Fields {
 	
-	protected static $components = [];
+	/**
+	 * 组件容器
+	 * @var array
+	 */
+	protected static $componentContainers =  array();
+	
+	/**
+	 * 所有允许的字段
+	 * @var array
+	 */
 	protected $allowFields = array();
 	
-	public static function factory($component) {
-		if (!isset(self::$components[$component])) {
-			$class =  "\Fields\Component\\".ucfirst($component);
-			self::$components[$component] = new $class;
+	/**
+	 * 模型别名
+	 * @var array
+	 */
+	protected $modelAlias = array();
+	
+	/**
+	 * 组件实例
+	 * @param unknown $component
+	 * @return multitype:
+	 */
+	public static function component($component) {
+		if (!isset(self::$componentContainers[$component])) {
+			$class =  "\Fields\Component\\".ucwords($component);
+			self::$componentContainers[$component] = new $class;
 		} 
-		return self::$components[$component];
+		return self::$componentContainers[$component];
 	}
 	
 	/**
-	 * 抽象方法的实现
+	 * 抽象方法的实现数据的获取
 	 * @param array|string $model
 	 */
 	abstract public function get(array $models,array $data = array());
@@ -26,12 +46,28 @@ abstract class Fields {
 	 */
 	abstract protected function allowFields($model,$data = array());
 	
+	
+	/**
+	 * 添加字段别名
+	 * @param array $alias
+	 * @return \Fields\Fields
+	 */
+	public function modelAlias(array $alias) {
+		$this->modelAlias = $alias;
+		return $this;
+	}
+	
 	/**
 	 * 模型对像
 	 * @param unknown $model
 	 * @return \Fields\str_replace
 	 */
 	protected function modelObject($model) {
+		//解析别名获取真正的模型
+		if (isset($this->modelAlias[$model])) {
+			$model = $this->modelAlias[$model];
+		}
+		
 		$model = str_replace(' ', '\\', ucwords(str_replace(['_','-'], ' ',$model)));
 		return new $model;
 	}
@@ -43,7 +79,17 @@ abstract class Fields {
 	 */
 	protected function modelString($model) {
 		$model = is_object($model) ? get_class($model) : $model;
-		return str_replace('\\', '_', $model);
+		
+		//有别名则返回别名
+		if ((boolean) $key = array_search($model, $this->allowFields)) {
+			$model = $key;
+		} 
+		//替换命名空间
+		else {
+			$model = str_replace('\\', '_', $model);
+		}
+		
+		return $model;
 	}
 
 	/**
@@ -68,44 +114,18 @@ abstract class Fields {
 		//数据值为false则不会执行字段callable解析
 		if ($data === false) {
 			return $model->fields();
-		} elseif (is_array($data) && !empty($data)) {
-			//传入需要解析的数据
+		}
+		//有解析数据则传入需要解析的数据
+		elseif (is_array($data) && !empty($data)) {
 			$model->setFieldsData($data);
 		}
 		
+		//解析字段规则即callable
 		$fields = array();
 		foreach ($model->fields() as $key=>$values) {
 			$fields[$key] = $model->resolveFieldsRule($values);
 		}
 		return $fields;
 	}
-// 	/**
-// 	 * 模型字段
-// 	 * @param object $model
-// 	 * @param boolean|array $resolve
-// 	 * @throws \Exception
-// 	 * @return array
-// 	 */
-// 	protected function modelFields($model,$resolve = true) {
-		
-// 		!is_object($model) && $model = $this->modelObject($model);
-		
-// 		//不解析的情况下直接返回
-// 		if (is_bool($resolve) && !$resolve) {
-// 			return $model->fields();
-// 		} elseif (is_array($resolve)) {//需要解析的数组
-// 			$array = $resolve;
-// 		} else {
-// 			throw new \Exception('Illegal parameter!', E_USER_ERROR);
-// 		}
-// 		$fields = array();
-// 		foreach ($model->fields() as $key=>$values) {
-// 			if (!empty($array) && !in_array($key, $array,true)) {
-// 				continue;
-// 			}
-// 			$fields[$key] = $model->setFieldsCallable($values);
-// 		}
-// 		return $fields;
-// 	}
 	
 }

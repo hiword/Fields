@@ -21,14 +21,16 @@ class Validator extends Fields {
 	 * (non-PHPdoc)
 	 * @see \Fields\Fields::allowFields()
 	 */
-	protected function allowFields($model, $data = false) {
+	protected function allowFields($model, $data = array()) {
 		
 		$allowFields = array();
 		
-		foreach (parent::modelFields($model,null)  as  $key=>$values) {
-			if (!empty($values['validator_php']) && isset($data[$key])) {
-				$allowFields[$key] = $values['validator_php'];
+		foreach (parent::modelFields($model,null)  as  $k=>$item) {
+			
+			if (!empty($item['validator_php']) && isset($data[$key])) {
+				$allowFields[$k] = $item['validator_php'];
 			}
+			
 		}
 		
 		return $allowFields;
