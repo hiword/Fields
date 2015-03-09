@@ -12,7 +12,7 @@ class Validator extends Fields {
 		foreach ($models as $model) {
 			$this->allowFields[parent::modelString($model)] = $this->allowFields($model,$data);
 		}
-		
+
 		return parent::returnAllowFields();
 	} 
 	
@@ -22,12 +22,12 @@ class Validator extends Fields {
 	 * @see \Fields\Fields::allowFields()
 	 */
 	protected function allowFields($model, $data = array()) {
-		
+
 		$allowFields = array();
-		
+
 		foreach (parent::modelFields($model,null)  as  $k=>$item) {
-			
-			if (!empty($item['validator_php']) && isset($data[$key])) {
+
+			if (!empty($item['validator_php']) && isset($data[$k])) {
 				$allowFields[$k] = $item['validator_php'];
 			}
 			

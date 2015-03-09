@@ -110,7 +110,7 @@ abstract class Fields {
 	protected function modelFields($model,$data = false) {
 		
 		!is_object($model) && $model = $this->modelObject($model);
-		
+
 		//数据值为false则不会执行字段callable解析
 		if ($data === false) {
 			return $model->fields();
@@ -125,6 +125,7 @@ abstract class Fields {
 		foreach ($model->fields() as $key=>$values) {
 			$fields[$key] = $model->resolveFieldsRule($values);
 		}
+		
 		return $fields;
 	}
 	
