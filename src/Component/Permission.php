@@ -28,7 +28,7 @@ class Permission extends Fields {
 		$allowFields = array();
 		
 		foreach (parent::modelFields($model,$data) as $k=>$item) {
-			$item['is_fillable'] == 1 && $allowFields[$k] = $k;
+			isset($item['is_fillable']) && $item['is_fillable'] == 1 && $allowFields[$k] = $k;
 		}
 		return $allowFields;
 	}
