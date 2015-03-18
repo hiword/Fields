@@ -113,7 +113,7 @@ abstract class Fields {
 
 		//数据值为false则不会执行字段callable解析
 		if ($data === false) {
-			return $model->fields();
+			return $model->fieldAttributes();
 		}
 		//有解析数据则传入需要解析的数据
 		elseif (is_array($data) && !empty($data)) {
@@ -122,7 +122,7 @@ abstract class Fields {
 		
 		//解析字段规则即callable
 		$fields = array();
-		foreach ($model->fields() as $key=>$values) {
+		foreach ($model->fieldAttributes() as $key=>$values) {
 			$fields[$key] = $model->resolveFieldsRule($values);
 		}
 		

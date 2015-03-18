@@ -45,7 +45,7 @@ trait Fields {
 	 * @param string $action  Add|Edit
 	 * @return array
 	 */
-	protected function setFieldsValue(array $data,$action = '') {
+	public function setFieldsValue(array $data,$action = '') {
 		
 		!empty($action) && $action = ucwords($action);
 		
