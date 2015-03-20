@@ -1,35 +1,27 @@
 <?php
 namespace Fields\Component;
 use Fields\Fields;
-class Permission extends Fields {
-	
-	
-	/**
-	 * 允许操作的字段接口
-	 * (non-PHPdoc)
-	 * @see \Fields\Fields::get()
-	 */
-	public function get(array $models,array $data = array()) {
-		
-		foreach ($models as $model) {
-			$this->allowFields[parent::modelString($model)] = $this->allowFields($model);
-		}
-		
-		return parent::returnAllowFields();
-	}
+use Fields\FieldsInterface;
+class Permission implements FieldsInterface {
 	
 	/**
-	 * 允许的字段
 	 * (non-PHPdoc)
-	 * @see \Fields\Fields::allowFields()
+	 * @see \Fields\FieldsInterface::getFields()
 	 */
-	protected function allowFields($model,$data = false) {
-		
+	public function getFields(Fields $object,array $data = array()) {
+	
 		$allowFields = array();
-		
-		foreach (parent::modelFields($model,$data) as $k=>$item) {
+	
+		foreach ($object->getResolveFields() as $k=>$item) {
+				
+			//过滤选项
+			if (!empty($data) && !in_array($k,$data,true)) {
+				continue;
+			}
+				
 			isset($item['is_fillable']) && $item['is_fillable'] == 1 && $allowFields[$k] = $k;
 		}
+	
 		return $allowFields;
 	}
 	

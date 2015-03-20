@@ -2,7 +2,7 @@
     "name": "simon/fields",
     "description": "fields operation.",
     "type": "library",
-    "keywords": ["fields", "laravel"],
+    "keywords": ["fields", "crcms"],
     "homepage": "https://github.com/hiword/form",
     "authors": [
         {
