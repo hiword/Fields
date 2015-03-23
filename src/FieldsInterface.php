@@ -10,5 +10,5 @@ interface FieldsInterface {
 	 */
 // 	public function fieldAttributes();
 
-	public function getFields(Fields $object,array $data = array());
+	public function get(Fields $object,array $data = array());
 }

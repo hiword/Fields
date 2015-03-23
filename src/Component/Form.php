@@ -9,7 +9,7 @@ class Form implements FieldsInterface {
 	 * (non-PHPdoc)
 	 * @see \Fields\FieldsInterface::getFields()
 	 */
-	public function getFields(Fields $object,array $data = array()) {
+	public function get(Fields $object,array $data = array()) {
 		
 		$allowFields = array();
 		
