@@ -1,14 +1,14 @@
 <?php
 namespace Fields\Component;
-use Fields\Fields;
-use Fields\FieldsInterface;
+use Fields\FieldInterface;
+use Fields\Field;
 class Permission implements FieldsInterface {
 	
 	/**
 	 * (non-PHPdoc)
 	 * @see \Fields\FieldsInterface::getFields()
 	 */
-	public function get(Fields $object,array $data = array()) {
+	public function get(Field $object,array $data = array()) {
 	
 		$allowFields = array();
 	

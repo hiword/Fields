@@ -1,6 +1,6 @@
 <?php
 namespace Fields;
-abstract class Fields {
+abstract class Field {
 	
 	/**
 	 * 请求数据

@@ -1,13 +1,14 @@
 <?php
 namespace Fields\Component;
-use Fields\FieldsInterface;
+use Fields\FieldInterface;
+use Fields\Field;
 class Validator implements FieldsInterface {
 	
 	/**
 	 * (non-PHPdoc)
 	 * @see \Fields\FieldsInterface::getFields()
 	 */
-	public function get(Fields $object,array $data = array()) {
+	public function get(Field $object,array $data = array()) {
 	
 		$allowFields = array();
 	
