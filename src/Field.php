@@ -21,7 +21,7 @@ abstract class Field {
 	/**
 	 * 字段属性
 	 */
-	abstract protected function fieldAttributes();
+	abstract public function fieldAttributes();
 	
 	/**
 	 * 解析字段规则，主要用于显示时解析callable或内置字段方法
@@ -36,7 +36,7 @@ abstract class Field {
 		//
 		foreach ($data as $key=>&$items) {
 				
-			if (is_array($items)) 
+			if (is_array($items) && $items) 
 			{
 				$items = $this->getResolveFields($items);
 			} 
@@ -66,11 +66,15 @@ abstract class Field {
 		foreach ($data as $key=>&$value) {
 				
 			if(method_exists($this, $method = "{$key}{$action}Value")) 
-			{} 
+			{
+				$value = $this->$method($value);
+			} 
 			elseif (method_exists($this,$method = "{$key}Value")) 
-			{}
+			{
+				$value = $this->$method($value);
+			}
 			
-			$value = $this->$method($value);
+			
 		}
 		return $data;
 	}

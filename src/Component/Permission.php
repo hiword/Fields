@@ -2,7 +2,7 @@
 namespace Fields\Component;
 use Fields\FieldInterface;
 use Fields\Field;
-class Permission implements FieldsInterface {
+class Permission implements FieldInterface {
 	
 	/**
 	 * (non-PHPdoc)

@@ -1,7 +1,7 @@
 <?php
 namespace Fields;
 
-use Field;
+use Fields\Field;
 
 interface FieldInterface {
 	

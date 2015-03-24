@@ -3,7 +3,7 @@ namespace Fields\Component;
 
 use Fields\FieldInterface;
 use Fields\Field;
-class Form implements FieldsInterface {
+class Form implements FieldInterface {
 
 	/**
 	 * (non-PHPdoc)
