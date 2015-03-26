@@ -6,16 +6,15 @@ abstract class Field {
 	 * 请求数据
 	 * @var array
 	 */
-	protected static $requestData = array();
+	protected static $request = null;
 	
 	/**
 	 * 设置请求数据
 	 * @param array $data
 	 * @return array
 	*/
-	public static function setRequestData(array $data) {
-		static::$requestData = $data;
-		return $data;
+	public static function setRequest($request) {
+		return static::$request = $request;
 	}
 	
 	/**
