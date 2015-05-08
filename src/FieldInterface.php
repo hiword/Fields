@@ -5,6 +5,8 @@ use Fields\Field;
 
 interface FieldInterface {
 	
+// 	public function __construct(array $data = array());
+	
 	/**
 	 * 字段abstract函数，用于设置字段规则
 	 */

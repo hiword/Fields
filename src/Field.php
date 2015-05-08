@@ -27,19 +27,29 @@ abstract class Field {
 	 * @param array $data
 	 * @return array $array
 	 */
-	public function getResolveFields(array $data = array()) {
+	public function getResolveFields(array $data = array('*'),array $attributes = array()) {
 	
-		//
-		empty($data) && $data = $this->fieldAttributes();
+		empty($data) && $data = array('*');
 		
 		//
-		foreach ($data as $key=>&$items) {
-				
+		empty($attributes) && $attributes = $this->fieldAttributes();
+		//
+		foreach ($attributes as $key=>&$items) {
+			
+			if ($data !== array('*') && !in_array($key, $data,true))
+			{
+				//不存在则删除
+				unset($attributes[$key]);
+				continue;
+			}
+			
 			if (is_array($items) && $items) 
 			{
-				$items = $this->getResolveFields($items);
+				//当$key是第二次循环的时候，好像不再是字段key，所以传入array(*)，先这样回头再测试
+				$items = $this->getResolveFields(array('*'),$items);
 			} 
-			elseif (is_callable($items)) 
+			//is_string是为了解决，有内部函数名与字符串冲突
+			elseif (is_callable($items) && !is_string($items)) 
 			{//callable
 				$items = call_user_func($items);
 			} 
@@ -49,7 +59,8 @@ abstract class Field {
 // 			}
 				
 		}
-		return $data;
+		
+		return $attributes;
 	}
 	
 	/**

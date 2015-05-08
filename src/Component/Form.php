@@ -1,8 +1,8 @@
 <?php
 namespace Fields\Component;
-
 use Fields\FieldInterface;
 use Fields\Field;
+
 class Form implements FieldInterface {
 
 	/**
@@ -13,14 +13,10 @@ class Form implements FieldInterface {
 		
 		$allowFields = array();
 		
-		foreach ($object->getResolveFields() as $k=>$item) {
+		foreach ($object->getResolveFields($data) as $k=>$item) {
 			
-			//过滤选项
-			if (!empty($data) && !in_array($k,$data,true)) {
-				continue;
-			}
+			!empty($item['form']) && !empty($item['form']['attr']) && $allowFields[$k] = $item['form'];
 			
-			$item['is_show'] == 1 && $allowFields[$k] = $item['form'];
 		}
 		
 		return $allowFields;
