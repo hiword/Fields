@@ -15,7 +15,7 @@ class Form implements FieldInterface {
 		
 		foreach ($object->getResolveFields($data) as $k=>$item) {
 			
-			!empty($item['form']) && !empty($item['form']['attr']) && $allowFields[$k] = $item['form'];
+			!empty($item['form']) && !empty($item['form']['role']) && $allowFields[$k] = $item['form'];
 			
 		}
 		
