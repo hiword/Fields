@@ -19,6 +19,12 @@ class Form implements FieldInterface {
 			
 		}
 		
+		uasort($allowFields,function ($a,$b){
+			$sort1 = isset($a['sort']) ? intval($a['sort']) : 0;
+			$sort2 = isset($b['sort']) ? intval($b['sort']) : 0;
+			return $sort2 - $sort1 ;
+		});
+		
 		return $allowFields;
 	}
 	
